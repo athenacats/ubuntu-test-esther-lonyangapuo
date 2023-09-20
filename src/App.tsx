@@ -34,6 +34,14 @@ function App() {
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
 
+  function formatDate(dateString: string) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const options: any = { day: "numeric", month: "long", year: "numeric" };
+    const formatted = new Date(dateString).toLocaleDateString("en-US", options);
+    const parts = formatted.replace(/,/, "").split(" ");
+    return `${parts[1]} ${parts[0]} ${parts[2]}`;
+  }
+
   return (
     <>
       {cardDataArray!.map((cardData, index) => (
@@ -53,7 +61,7 @@ function App() {
               {" "}
               {cardData._embedded.author[0].name}
             </a>{" "}
-            on {cardData.date}
+            on {formatDate(cardData.date)}
           </p>
           <p
             dangerouslySetInnerHTML={{ __html: cardData.excerpt.rendered }}
