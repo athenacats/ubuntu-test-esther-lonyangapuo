@@ -24,6 +24,12 @@ interface CardData {
       }>
     >;
   };
+  _links: {
+    "wp:featuredmedia": Array<{
+      embeddable: boolean;
+      href: string;
+    }>;
+  };
   date: string;
 }
 
@@ -60,14 +66,15 @@ function App() {
                 {cardData._embedded["wp:term"][1]?.[0]?.name || "Topic"}
               </p>
               <hr className="u-sv1"></hr>
-
-              <img
-                className="p-card__image"
-                height="185"
-                width="330"
-                src={cardData.featured_media}
-                alt={cardData.title.rendered}
-              ></img>
+              <a href={cardData._links["wp:featuredmedia"]?.[0]?.href || ""}>
+                <img
+                  className="p-card__image"
+                  height="185"
+                  width="330"
+                  src={cardData.featured_media}
+                  alt={cardData.title.rendered}
+                ></img>
+              </a>
               <div className="p-card__inner card-details">
                 <a href={cardData.link} className="card-title-link">
                   <h4 className="card-title u-align--left">
