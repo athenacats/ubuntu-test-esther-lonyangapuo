@@ -5,9 +5,18 @@ interface CardData {
   title: {
     rendered: string;
   };
-  content: {
+  excerpt: {
     rendered: string;
   };
+  featured_media: string;
+  link: string;
+  _embedded: {
+    author: Array<{
+      name: string;
+      url: string;
+    }>;
+  };
+  date: string;
 }
 
 function App() {
@@ -25,25 +34,30 @@ function App() {
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
 
-  function htmlToText(html: string): string {
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(html, "text/html");
-    return doc.body.textContent || "";
-  }
-
   return (
     <>
       {cardDataArray!.map((cardData, index) => (
-        <div
-          className="p-card"
-          key={index}
-          title="CLOUD AND SERVER"
-
-          //dangerouslySetInnerHTML={{ __html: cardData.content.rendered }}
-        >
+        <div className="p-card" key={index}>
           <h3>CLOUD AND SERVER</h3>
           <hr className="u-sv1"></hr>
-          {htmlToText(cardData.content.rendered)}
+          <img
+            src={cardData.featured_media}
+            alt={cardData.title.rendered}
+          ></img>
+          <a href={cardData.link}>
+            <h3>{cardData.title.rendered}</h3>
+          </a>
+          <p>
+            By{" "}
+            <a href={cardData._embedded.author[0].url}>
+              {" "}
+              {cardData._embedded.author[0].name}
+            </a>{" "}
+            on {cardData.date}
+          </p>
+          <p
+            dangerouslySetInnerHTML={{ __html: cardData.excerpt.rendered }}
+          ></p>
         </div>
       ))}
     </>
