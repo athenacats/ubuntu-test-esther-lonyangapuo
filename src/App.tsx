@@ -6,7 +6,7 @@ interface CardData {
   title: {
     rendered: string;
   };
-  excerpt: {
+  content: {
     rendered: string;
   };
   featured_media: string;
@@ -85,7 +85,7 @@ function App() {
               <p
                 className="p-card__inner card-type u-no-padding--bottom"
                 dangerouslySetInnerHTML={{
-                  __html: cardData.excerpt.rendered,
+                  __html: cardData.content.rendered,
                 }}
               ></p>
             </div>
