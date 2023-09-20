@@ -70,9 +70,11 @@ function App() {
               ></img>
               <div className="p-card__inner card-details">
                 <a href={cardData.link} className="card-title-link">
-                  <h4 className="card-title">{cardData.title.rendered}</h4>
+                  <h4 className="card-title u-align--left">
+                    {cardData.title.rendered}
+                  </h4>
                 </a>
-                <h6>
+                <h6 className="u-align--left">
                   By{" "}
                   <a href={cardData._embedded.author[0].url}>
                     {" "}
@@ -83,7 +85,7 @@ function App() {
               </div>
               <hr className="u-sv1"></hr>
               <p
-                className="p-card__inner card-type u-no-padding--bottom"
+                className="u-align--left p-card__inner card-type u-no-padding--bottom"
                 dangerouslySetInnerHTML={{
                   __html: cardData.content.rendered,
                 }}
