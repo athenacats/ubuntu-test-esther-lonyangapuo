@@ -3,30 +3,34 @@ import "./App.css";
 import { useEffect, useState } from "react";
 
 interface CardData {
-  title: string;
-  imageSrc: string;
-  imageAlt: string;
-  content: string;
+  title: {
+    rendered: string;
+  };
 }
 
 function App() {
-  const [cardData, setCardData] = useState<CardData | null>(null);
+  const [cardDataArray, setCardDataArray] = useState<CardData[]>([]);
 
   useEffect(() => {
-    // Fetch the JSON data from the external URL
     fetch(
       "https://people.canonical.com/~anthonydillon/wp-json/wp/v2/posts.json"
     )
       .then((response) => response.json())
-      .then((data) => {
+      .then((data: CardData[]) => {
         console.log("Fetched data:", data);
-        setCardData(data);
+        setCardDataArray(data);
       })
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
   return (
     <>
-      <Card title={cardData?.title || "Loading..."}>{cardData?.content}</Card>
+      {cardDataArray!.map((cardData, index) => (
+        <Card
+          key={index}
+          title={cardData?.title.rendered || "Loading..."}
+          //dangerouslySetInnerHTML={{ __html: cardData.content.rendered }}
+        ></Card>
+      ))}
     </>
   );
 }
