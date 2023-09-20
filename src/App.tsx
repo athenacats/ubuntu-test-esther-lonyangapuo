@@ -1,4 +1,5 @@
 import "./App.css";
+
 import { useEffect, useState } from "react";
 
 interface CardData {
@@ -50,48 +51,48 @@ function App() {
   }
 
   return (
-    <>
-      <div className="row">
-        <div className="col-4">
-          {cardDataArray!.map((cardData, index) => (
-            <div className="p-card" key={index}>
-              <div className="p-card__content">
-                <h3 className="topic-type">
-                  {cardData._embedded["wp:term"][1]?.[0]?.name || "Topic"}
-                </h3>
-                <hr className="u-sv1"></hr>
+    <div className="row">
+      {cardDataArray!.map((cardData, index) => (
+        <div className="col-4" key={index}>
+          <div className="p-card">
+            <div className="p-card__content">
+              <h2 className="topic-title">
+                {cardData._embedded["wp:term"][1]?.[0]?.name || "Topic"}
+              </h2>
+              <hr className="u-sv1"></hr>
 
-                <img
-                  className="p-card__image"
-                  src={cardData.featured_media}
-                  alt={cardData.title.rendered}
-                ></img>
-                <div className="p-card__inner card-details">
-                  <a href={cardData.link} className="card-title-link">
-                    <h3 className="card-title">{cardData.title.rendered}</h3>
-                  </a>
-                  <p>
-                    By{" "}
-                    <a href={cardData._embedded.author[0].url}>
-                      {" "}
-                      {cardData._embedded.author[0].name}
-                    </a>{" "}
-                    on {formatDate(cardData.date)}
-                  </p>
-                </div>
-                <hr className="u-sv1"></hr>
-                <p
-                  className="p-card__inner card-type"
-                  dangerouslySetInnerHTML={{
-                    __html: cardData.excerpt.rendered,
-                  }}
-                ></p>
+              <img
+                className="p-card__image"
+                height="185"
+                width="330"
+                src={cardData.featured_media}
+                alt={cardData.title.rendered}
+              ></img>
+              <div className="p-card__inner card-details">
+                <a href={cardData.link} className="card-title-link">
+                  <h4 className="card-title">{cardData.title.rendered}</h4>
+                </a>
+                <p>
+                  By{" "}
+                  <a href={cardData._embedded.author[0].url}>
+                    {" "}
+                    {cardData._embedded.author[0].name}
+                  </a>{" "}
+                  on {formatDate(cardData.date)}
+                </p>
               </div>
+              <hr className="u-sv1"></hr>
+              <p
+                className="p-card__inner card-type u-no-padding--bottom"
+                dangerouslySetInnerHTML={{
+                  __html: cardData.excerpt.rendered,
+                }}
+              ></p>
             </div>
-          ))}
+          </div>
         </div>
-      </div>
-    </>
+      ))}
+    </div>
   );
 }
 
