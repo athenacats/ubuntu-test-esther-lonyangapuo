@@ -56,9 +56,9 @@ function App() {
         <div className="col-4" key={index}>
           <div className="p-card">
             <div className="p-card__content">
-              <h2 className="topic-title">
+              <p className="topic-title">
                 {cardData._embedded["wp:term"][1]?.[0]?.name || "Topic"}
-              </h2>
+              </p>
               <hr className="u-sv1"></hr>
 
               <img
@@ -72,14 +72,14 @@ function App() {
                 <a href={cardData.link} className="card-title-link">
                   <h4 className="card-title">{cardData.title.rendered}</h4>
                 </a>
-                <p>
+                <h6>
                   By{" "}
                   <a href={cardData._embedded.author[0].url}>
                     {" "}
                     {cardData._embedded.author[0].name}
                   </a>{" "}
                   on {formatDate(cardData.date)}
-                </p>
+                </h6>
               </div>
               <hr className="u-sv1"></hr>
               <p
