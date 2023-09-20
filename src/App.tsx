@@ -56,7 +56,7 @@ function App() {
         <div className="col-4" key={index}>
           <div className="p-card">
             <div className="p-card__content">
-              <p className="topic-title">
+              <p className="u-align--left topic-title">
                 {cardData._embedded["wp:term"][1]?.[0]?.name || "Topic"}
               </p>
               <hr className="u-sv1"></hr>
