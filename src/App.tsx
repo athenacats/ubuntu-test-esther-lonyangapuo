@@ -15,6 +15,13 @@ interface CardData {
       name: string;
       url: string;
     }>;
+    "wp:term": Array<
+      Array<{
+        id: number;
+        link: string;
+        name: string;
+      }>
+    >;
   };
   date: string;
 }
@@ -44,30 +51,46 @@ function App() {
 
   return (
     <>
-      {cardDataArray!.map((cardData, index) => (
-        <div className="p-card" key={index}>
-          <h3>CLOUD AND SERVER</h3>
-          <hr className="u-sv1"></hr>
-          <img
-            src={cardData.featured_media}
-            alt={cardData.title.rendered}
-          ></img>
-          <a href={cardData.link}>
-            <h3>{cardData.title.rendered}</h3>
-          </a>
-          <p>
-            By{" "}
-            <a href={cardData._embedded.author[0].url}>
-              {" "}
-              {cardData._embedded.author[0].name}
-            </a>{" "}
-            on {formatDate(cardData.date)}
-          </p>
-          <p
-            dangerouslySetInnerHTML={{ __html: cardData.excerpt.rendered }}
-          ></p>
+      <div className="row">
+        <div className="col-4">
+          {cardDataArray!.map((cardData, index) => (
+            <div className="p-card" key={index}>
+              <div className="p-card__content">
+                <h3 className="topic-type">
+                  {cardData._embedded["wp:term"][1]?.[0]?.name || "Topic"}
+                </h3>
+                <hr className="u-sv1"></hr>
+
+                <img
+                  className="p-card__image"
+                  src={cardData.featured_media}
+                  alt={cardData.title.rendered}
+                ></img>
+                <div className="p-card__inner card-details">
+                  <a href={cardData.link} className="card-title-link">
+                    <h3 className="card-title">{cardData.title.rendered}</h3>
+                  </a>
+                  <p>
+                    By{" "}
+                    <a href={cardData._embedded.author[0].url}>
+                      {" "}
+                      {cardData._embedded.author[0].name}
+                    </a>{" "}
+                    on {formatDate(cardData.date)}
+                  </p>
+                </div>
+                <hr className="u-sv1"></hr>
+                <p
+                  className="p-card__inner card-type"
+                  dangerouslySetInnerHTML={{
+                    __html: cardData.excerpt.rendered,
+                  }}
+                ></p>
+              </div>
+            </div>
+          ))}
         </div>
-      ))}
+      </div>
     </>
   );
 }
